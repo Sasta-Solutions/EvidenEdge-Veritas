@@ -1,1 +1,1 @@
-# EvidenEdge-Veritas
+# EvidtenEdge-Veritas
