@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BankVal Verification</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    input, button { padding: 10px; margin: 0.5rem 0; width: 100%; }
+    .result { background: #f4f4f4; padding: 1rem; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h2>Bank Account Verification</h2>
+  <form id="verifyForm">
+    <input type="text" id="routingNumber" placeholder="Routing Number" required />
+    <input type="text" id="accountNumber" placeholder="Account Number" required />
+    <input type="text" id="file_id" placeholder="File ID" />
+    <input type="text" id="loan_id" placeholder="Loan ID" />
+    <input type="email" id="email" placeholder="Email" />
+    <button type="submit">Verify</button>
+  </form>
+  <div class="result" id="result"></div>
+
+  <script>
+    document.getElementById("verifyForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const body = {
+        routingNumber: document.getElementById("routingNumber").value,
+        accountNumber: document.getElementById("accountNumber").value,
+        file_id: document.getElementById("file_id").value,
+        loan_id: document.getElementById("loan_id").value,
+        email: document.getElementById("email").value,
+      };
+      const res = await fetch("https://bankval.vercel.app/api/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
