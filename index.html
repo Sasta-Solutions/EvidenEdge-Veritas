@@ -1,27 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BankVal Verification</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EvidenEdge Verification</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
-    input, button { padding: 10px; margin: 0.5rem 0; width: 100%; }
-    .result { background: #f4f4f4; padding: 1rem; margin-top: 1rem; }
+    /* Base Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #FFFFFF; /* White background */
+      font-family: Arial, sans-serif;
+      color: #333333; /* Charcoal Gray for body text */
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    h2 {
+      text-align: center;
+      color: #2373A8; /* Primary Blue */
+      margin-bottom: 1rem;
+    }
+    
+    /* Form and Input Styles */
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 0.5rem 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #2373A8;
+    }
+    
+    button {
+      background-color: #2373A8;  /* Primary Blue */
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #61B3D8;  /* Accent Blue */
+    }
+    
+    /* Result container with polished styling */
+    .result {
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Footer with brand acknowledgment */
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 14px;
+      color: #333333;
+    }
   </style>
 </head>
 <body>
-  <h2>Bank Account Verification</h2>
-  <form id="verifyForm">
-    <input type="text" id="routingNumber" placeholder="Routing Number" required />
-    <input type="text" id="accountNumber" placeholder="Account Number" required />
-    <input type="text" id="file_id" placeholder="File ID" />
-    <input type="text" id="loan_id" placeholder="Loan ID" />
-    <input type="email" id="email" placeholder="Email" />
-    <button type="submit">Verify</button>
-  </form>
-  <div class="result" id="result"></div>
-
+  <div class="container">
+    <h2>EvidenEdge Verification</h2>
+    <form id="verifyForm">
+      <input type="text" id="routingNumber" placeholder="Routing Number" required />
+      <input type="text" id="accountNumber" placeholder="Account Number" required />
+      <input type="text" id="file_id" placeholder="File ID" />
+      <input type="text" id="loan_id" placeholder="Loan ID" />
+      <input type="email" id="email" placeholder="Email" />
+      <button type="submit">Verify</button>
+    </form>
+    <div class="result" id="result"></div>
+    <div class="footer">
+      Powered by SASTA.Ai x Evident Title
+    </div>
+  </div>
+  
   <script>
     document.getElementById("verifyForm").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -32,13 +102,17 @@
         loan_id: document.getElementById("loan_id").value,
         email: document.getElementById("email").value,
       };
-      const res = await fetch("https://bankval.vercel.app/api/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const data = await res.json();
-      document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+      try {
+        const res = await fetch("https://bankval.vercel.app/api/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+      } catch (error) {
+        document.getElementById("result").innerText = "Error: " + error;
+      }
     });
   </script>
 </body>
